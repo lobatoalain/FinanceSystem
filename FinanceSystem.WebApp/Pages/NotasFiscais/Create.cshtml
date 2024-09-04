@@ -1,0 +1,58 @@
+﻿@page
+@model FinanceSystem.WebApp.Pages.NotasFiscais.CreateModel
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<div class="container mt-4">
+    <h1>@ViewData["Title"]</h1>
+
+    <form method="post">
+        <input type="hidden" asp-for="Input.Id" />
+        <div class="mb-3">
+            <label asp-for="Input.Pagador" class="form-label">Pagador</label>
+            <input asp-for="Input.Pagador" class="form-control" required />
+        </div>
+        <div class="mb-3">
+            <label asp-for="Input.NumeroNota" class="form-label">Número da Nota</label>
+            <input asp-for="Input.NumeroNota" class="form-control" required />
+        </div>
+        <div class="mb-3">
+            <label asp-for="Input.DataEmissao" class="form-label">Data de Emissão</label>
+            <input asp-for="Input.DataEmissao" class="form-control" type="date" required />
+        </div>
+        <div class="mb-3">
+            <label asp-for="Input.DataCobranca" class="form-label">Data de Cobrança</label>
+            <input asp-for="Input.DataCobranca" class="form-control" type="date" />
+        </div>
+        <div class="mb-3">
+            <label asp-for="Input.DataPagamento" class="form-label">Data de Pagamento</label>
+            <input asp-for="Input.DataPagamento" class="form-control" type="date" />
+        </div>
+        <div class="mb-3">
+            <label asp-for="Input.ValorNota" class="form-label">Valor da Nota</label>
+            <input asp-for="Input.ValorNota" class="form-control" step="0.01" type="number" required />
+        </div>
+        <div class="mb-3">
+            <label asp-for="Input.DocumentoNotaFiscal" class="form-label">Documento da Nota Fiscal</label>
+            <input asp-for="Input.DocumentoNotaFiscal" class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label asp-for="Input.DocumentoBoleto" class="form-label">Documento do Boleto</label>
+            <input asp-for="Input.DocumentoBoleto" class="form-control" />
+        </div>
+        <div class="mb-3">
+            <label asp-for="Input.Status" class="form-label">Status</label>
+            <select asp-for="Input.Status" class="form-select" required>
+                <option value="1">Emitida</option>
+                <option value="2">Cobrança Realizada</option>
+                <option value="3">Pagamento em Atraso</option>
+                <option value="4">Pagamento Realizado</option>
+            </select>
+        </div>
+        <div class="d-flex">
+            <button type="submit" class="btn btn-primary">Cadastrar</button>
+            <a asp-page="/NotasFiscais/Index" class="btn btn-secondary ms-2">Voltar</a>
+        </div>
+    </form>
+</div>

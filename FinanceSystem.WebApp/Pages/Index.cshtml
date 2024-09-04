@@ -1,0 +1,94 @@
+﻿@page
+@model FinanceSystem.WebApp.Pages.IndexModel
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="container mt-4">
+    <h1>@ViewData["Title"]</h1>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card text-white bg-primary mb-3">
+                <div class="card-header">Total de Notas Emitidas</div>
+                <div class="card-body">
+                    <h5 class="card-title">@Model.TotalNotasEmitidas.ToString("C")</h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white bg-secondary mb-3">
+                <div class="card-header">Total sem Cobrança</div>
+                <div class="card-body">
+                    <h5 class="card-title">@Model.TotalSemCobranca.ToString("C")</h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white bg-danger mb-3">
+                <div class="card-header">Notas Vencidas</div>
+                <div class="card-body">
+                    <h5 class="card-title">@Model.TotalNotasVencidas.ToString("C")</h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white bg-success mb-3">
+                <div class="card-header">Notas a Vencer</div>
+                <div class="card-body">
+                    <h5 class="card-title">@Model.TotalNotasAVencer.ToString("C")</h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white bg-info mb-3">
+                <div class="card-header">Notas Pagas</div>
+                <div class="card-body">
+                    <h5 class="card-title">@Model.TotalNotasPagas.ToString("C")</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <h3>Evolução da Inadimplência</h3>
+        <canvas id="inadimplenciaChart"></canvas>
+    </div>
+    <div>
+        <h3>Evolução da Receita Recebida</h3>
+        <canvas id="receitaChart"></canvas>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const ctxInadimplencia = document.getElementById('inadimplenciaChart').getContext('2d');
+        const inadimplenciaChart = new Chart(ctxInadimplencia, {
+            type: 'line',
+            data: {
+                labels: @Html.Raw(Json.Serialize(Model.InadimplenciaLabels)),
+                datasets: [{
+                    label: 'Inadimplência',
+                    data: @Html.Raw(Json.Serialize(Model.InadimplenciaData)),
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                }]
+            },
+        });
+
+        const ctxReceita = document.getElementById('receitaChart').getContext('2d');
+        const receitaChart = new Chart(ctxReceita, {
+            type: 'line',
+            data: {
+                labels: @Html.Raw(Json.Serialize(Model.ReceitaLabels)),
+                datasets: [{
+                    label: 'Receita Recebida',
+                    data: @Html.Raw(Json.Serialize(Model.ReceitaData)),
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                }]
+            },
+        });
+    </script>
+}
